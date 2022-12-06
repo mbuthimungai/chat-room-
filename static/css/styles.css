@@ -1,0 +1,31 @@
+
+nav {
+    margin-bottom: 2rem;
+}
+
+.center {
+    text-align: center;
+}
+
+.form-container {
+    width: 40rem;
+}
+.center-div {
+    margin: 0 auto;
+}
+.mg-btm {
+    margin-bottom: 1rem;
+}
+/* FLASHES */
+.alert.alert-success {
+    background-color: #54B435;
+}
+.alert.alert-warning {
+    background-color: rgb(253, 255, 0, .6);
+}
+.alert.alert-info {
+    background-color: rgb(111, 237, 214);
+}
+.alert.alert-error {
+    background-color: rgb(210, 0, 26, .6);
+}

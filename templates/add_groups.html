@@ -1,0 +1,21 @@
+{% from "bootstrap5/form.html" import render_form %}
+{% extends "base.html" %}
+{% block title %}
+Tarun | Add Group
+{% endblock %}
+{% block content %}
+<h1 class="center">
+    Add Group
+</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-container center-div">
+                {{form.csrf_token}}
+                {{render_form(form)}}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

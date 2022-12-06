@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}
+{{current_user.f_name}} | profile
+{% endblock %}
+{% block content %}
+<h1>Your groups</h1>
+<div class="container">
+    <div class="row">
+        {% for group in groups %}
+        <div class="col-lg-4">
+            <div class="card">
+                <h5 class="card-header">{{group.group.title}}</h5>
+                <div class="card-body">                      
+                    <p class="card-text">created by {{group.group.owner.f_name}} {{group.group.owner.l_name}}</p>
+                  <p class="card-text">created on {{group.group.created_on}}</p>
+                  <a href="{{url_for('group', group=group.group.public_id)}}" class="btn btn-primary">view</a>
+                  {% if current_user.id == group.group.owner.id %}
+                  <a href="{{url_for('delete_group', group=group.group.public_id)}}" class="btn btn-primary">Delete</a>
+                  {% endif %}
+                </div>
+              </div>
+        </div> 
+        {% endfor %}       
+    </div>
+</div>
+{% endblock %}

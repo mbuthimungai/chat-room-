@@ -1,0 +1,82 @@
+{% from "bootstrap5/form.html" import render_form %}
+{% extends "base.html" %}
+{% block title %}
+{{current_user.f_name}} | group
+{% endblock %}
+{% block content %}
+<h1 class="center">{{group.title}}</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div  class="form-container center-div sticky-top">
+                {{form.csrf_token}}
+                {{render_form(form)}}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">  
+        {% if current_user.id == group.owner.id: %}
+        <div class="col-lg-6" >
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3>Members</h3>
+                    {% for member in members %}
+                    <div class="card mg-btm">
+                        <div class="card-body">
+                            <p class="card-text">{{member.member.f_name}} {{member.member.l_name}}</p>
+                            <a href="{{url_for('remove_member', group=group.public_id, user=member.member.public_id)}}" class="btn btn-primary">Remove</a>
+                        </div>
+                    </div>            
+                    {% endfor %}
+                </div>
+                <div class="col-lg-6">
+                    <h3>Non-Members</h3>
+                    {% for user in users %}
+                    {% if user.id not in ids: %}
+                    <div class="card mg-btm">
+                        <div class="card-body">
+                            <p class="card-text">{{user.f_name}} {{user.l_name}}</p>
+                            <a href="{{url_for('add_member', group=group.public_id, user=user.public_id)}}" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}                
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if current_user.id != group.owner.id %}
+        <div class="col-lg-6">
+            <h3>Members</h3>
+            {% for member in members %}
+            <div class="card mg-btm">
+                <div class="card-body">
+                    <p class="card-text">{{member.member.f_name}} {{member.member.l_name}}</p>
+                </div>
+            </div>            
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="col-lg-6">
+            <h3>Group Conversations</h3>
+            {% for converstion in conversations %}
+            
+            <div class="card mg-btm">
+                
+                <div class="card-body">
+                  <h5 class="card-title">{{converstion.text}}</h5>
+                  <p class="card-text">by {{converstion.text_owner.f_name}} {{converstion.text_owner.l_name}}</p>
+                  {% if group.owner.id == current_user.id or converstion.text_owner == current_user.id %}
+                  <a href="{{url_for('delete_text', group=group.public_id, text=converstion.id)}}" class="btn btn-primary">Delete</a>
+                  {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}

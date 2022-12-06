@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+{% block content %}
+    <h1>Hello there</h1>
+    <div class="container-fluid">
+        <div class="row">
+            {% for group in groups: %}
+            {% if current_user.id != group.created_by %}
+            <div class="col-lg-4">
+                <div class="card">
+                    <h5 class="card-header">{{group.title}}</h5>
+                    <div class="card-body">                      
+                      <p class="card-text">created by {{group.owner.f_name}} {{group.owner.l_name}}</p>
+                      <p class="card-text">created on {{group.created_on}}</p>
+                      {% if group.id not in curr_u_groups %}
+                      <a href="{{url_for('join_group', group=group.public_id)}}" class="btn btn-primary">join</a>
+                      {% endif %}
+                      {% if group.id in curr_u_groups %}
+                      <p class="card-text">Already a member</p>
+                      {% endif %}
+                    </div>
+                  </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
