@@ -23,7 +23,7 @@ app = Flask(__name__)
 
 #configurations
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///web-clone.sqlite"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", str(os.urandom(30)))
 
 ## Login manager to handle user session management
